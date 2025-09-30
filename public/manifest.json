@@ -1,0 +1,12 @@
+{
+  "short_name": "Musicfy",
+  "name": "Musicfy - Mini PWA",
+  "icons": [
+    { "src": "/images/logo.png", "sizes": "192x192", "type": "image/png" }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1db954",
+  "description": "Musicfy PWA: playlists offline, notifications and device features."
+}

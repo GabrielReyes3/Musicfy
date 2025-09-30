@@ -1,0 +1,16 @@
+{
+  "name": "musicfy-pwa",
+  "version": "1.0.0",
+  "description": "Mini PWA Musicfy - Splash, CSR+SSR, offline, notifications, device features",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "NODE_ENV=development node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
