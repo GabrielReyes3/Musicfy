@@ -31,3 +31,9 @@ Musicfy es una PWA demo que muestra playlists simuladas usando la iTunes Search 
 
 ## Notas
 - Para un push notifications real (con suscripciones), se necesita implementar VAPID y endpoint de push
+
+TAREA 1: Desarrollo de repositorio web
+MANUEL CONTRERAS CASTILLO
+• 26 sept
+
+REYES VARGAS JOSE GABRIEL IDGS11
