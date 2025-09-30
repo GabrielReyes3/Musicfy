@@ -19,8 +19,8 @@ async function registerSW() {
 // Ocultar splash y mostrar app
 function hideSplashAndInit() {
   setTimeout(() => {
-    SPLASH.style.display = "none";  // oculta splash completamente
-    APP.classList.remove("hidden");  // muestra app
+    SPLASH.style.display = "none";  
+    APP.classList.remove("hidden");  
     init();
   }, 1200);
 }
@@ -32,34 +32,69 @@ async function init() {
   renderFavorites();
 }
 
-// Fetch remote playlists (simulado con seeds)
+// Lista extendida (~30 artistas)
+const seeds = [
+  { id: "leny", name: "Lenny Kravitz" },
+  { id: "jamiroquai", name: "Jamiroquai" },
+  { id: "robbie", name: "Robbie Williams" },
+  { id: "robzombie", name: "Rob Zombie" },
+  { id: "metallica", name: "Metallica" },
+  { id: "nirvana", name: "Nirvana" },
+  { id: "queen", name: "Queen" },
+  { id: "michael", name: "Michael Jackson" },
+  { id: "madonna", name: "Madonna" },
+  { id: "prince", name: "Prince" },
+  { id: "daftpunk", name: "Daft Punk" },
+  { id: "gorillaz", name: "Gorillaz" },
+  { id: "coldplay", name: "Coldplay" },
+  { id: "radiohead", name: "Radiohead" },
+  { id: "linkinpark", name: "Linkin Park" },
+  { id: "rammstein", name: "Rammstein" },
+  { id: "slipknot", name: "Slipknot" },
+  { id: "adele", name: "Adele" },
+  { id: "beyonce", name: "Beyoncé" },
+  { id: "brunomars", name: "Bruno Mars" },
+  { id: "weeknd", name: "The Weeknd" },
+  { id: "drake", name: "Drake" },
+  { id: "eminem", name: "Eminem" },
+  { id: "kendrick", name: "Kendrick Lamar" },
+  { id: "bobmarley", name: "Bob Marley" },
+  { id: "rolling", name: "The Rolling Stones" },
+  { id: "beatles", name: "The Beatles" },
+  { id: "arctic", name: "Arctic Monkeys" },
+  { id: "redhot", name: "Red Hot Chili Peppers" },
+  { id: "oasis", name: "Oasis" }
+];
+
+// Fetch playlists por artista
 async function fetchPlaylists() {
-  const seeds = [
-    "pop", "rock", "lofi", "party", "acoustic",
-    "jazz", "hiphop", "classical", "reggae", "metal",
-    "indie", "blues"
-  ];
   const results = [];
-  for (const term of seeds) {
+  for (const s of seeds) {
     try {
-      const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(term)}&entity=song&limit=1`);
+      const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(s.name)}&entity=song&limit=6`);
       const data = await res.json();
-      if (data.results && data.results[0]) {
+      if (data.results && data.results.length > 0) {
+        let artwork = data.results[0].artworkUrl100 || data.results[0].artworkUrl600;
+        if (artwork) {
+          // convertir a 1200px HD
+          artwork = artwork.replace("100x100bb", "1200x1200bb")
+                           .replace("600x600bb", "1200x1200bb");
+        }
         results.push({
-          id: term,
-          title: term.toUpperCase(),
-          artwork: data.results[0].artworkUrl100,
-          seed: term
+          id: s.id,
+          title: s.name,
+          artwork: artwork,
+          seed: s.name
         });
       }
     } catch (err) {
-      console.warn("Fetch failed for", term, err);
+      console.warn("Fetch failed for", s.name, err);
     }
   }
   return results;
 }
 
-// Cargar playlists y renderizar cards
+// Cargar playlists y renderizar
 async function loadPlaylists() {
   PLAYLISTS_CONTAINER.innerHTML = "<p>Cargando playlists...</p>";
   const playlists = await fetchPlaylists();
@@ -82,7 +117,6 @@ async function loadPlaylists() {
     PLAYLISTS_CONTAINER.appendChild(card);
   });
 
-  // Handlers de botones
   PLAYLISTS_CONTAINER.querySelectorAll("[data-play]").forEach(b =>
     b.addEventListener("click", (e) => {
       const seed = e.target.dataset.play;
@@ -155,7 +189,7 @@ async function requestAndNotify() {
   } else { alert("Permiso de notificaciones denegado"); }
 }
 
-// Mic (speech)
+// Mic
 function startVoiceSearch() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (SpeechRecognition) {
