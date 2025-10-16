@@ -53,7 +53,7 @@ const seeds = [
   { id: "slipknot", name: "Slipknot" },
   { id: "adele", name: "Adele" },
   { id: "beyonce", name: "Beyoncé" },
-  { id: "brunomars", name: "Bruno Mars" },
+  // { id: "brunomars", name: "Bruno Mars" },
   { id: "weeknd", name: "The Weeknd" },
   { id: "drake", name: "Drake" },
   { id: "eminem", name: "Eminem" },
@@ -63,7 +63,7 @@ const seeds = [
   { id: "beatles", name: "The Beatles" },
   { id: "arctic", name: "Arctic Monkeys" },
   { id: "redhot", name: "Red Hot Chili Peppers" },
-  { id: "oasis", name: "Oasis" }
+  // { id: "oasis", name: "Oasis" }
 ];
 
 // Fetch playlists por artista
